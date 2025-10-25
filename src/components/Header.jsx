@@ -7,7 +7,6 @@ return (
         <div className="container header-container">
             <a href="#" className="logo">
                 <img src={logo} alt="Логотип" style={{ width: '100px', height: 'auto' }} />
-                vihlopnaya.01
             </a>
 
             <nav className="nav">
