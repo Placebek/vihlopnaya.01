@@ -3,14 +3,50 @@ import React, { useState } from 'react';
 function Form() {
   const [name, setName] = useState('');
   const [phone, setPhone] = useState('');
-  const [status, setStatus] = useState('idle'); // 'idle', 'submitting', 'success', 'error'
+  const [status, setStatus] = useState('idle');
   const [message, setMessage] = useState('');
+
+  // Форматируем номер телефона под шаблон: +7 (7XX) XXX-XX-XX
+  const formatPhone = (value) => {
+    // Удаляем все символы, кроме цифр
+    const digits = value.replace(/\D/g, '');
+
+    // Ограничиваем длину до 11 символов (для +7XXXXXXXXXX)
+    const sliced = digits.slice(0, 11);
+
+    // Строим шаблон
+    if (sliced.length < 2) return `+${sliced}`;
+    if (sliced.length < 5) return `+7 (${sliced.slice(1)}`;
+    if (sliced.length < 8)
+      return `+7 (${sliced.slice(1, 4)}) ${sliced.slice(4)}`;
+    if (sliced.length < 10)
+      return `+7 (${sliced.slice(1, 4)}) ${sliced.slice(4, 7)}-${sliced.slice(7)}`;
+    return `+7 (${sliced.slice(1, 4)}) ${sliced.slice(4, 7)}-${sliced.slice(7, 9)}-${sliced.slice(9, 11)}`;
+  };
+
+  // Проверка номера (Казахстан)
+  const isValidKazakhPhone = (value) => {
+    const clean = value.replace(/\D/g, '');
+    // Казахстан: +7 7XXXXXXXXX — вторая цифра обязательно 7
+    return /^77\d{8}$/.test(clean);
+  };
+
+  const handlePhoneChange = (e) => {
+    const formatted = formatPhone(e.target.value);
+    setPhone(formatted);
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     if (!name || !phone) {
       setStatus('error');
       setMessage('Пожалуйста, заполните все поля.');
+      return;
+    }
+
+    if (!isValidKazakhPhone(phone)) {
+      setStatus('error');
+      setMessage('Введите корректный номер телефона Казахстана (например: +7 (707) 123-45-67).');
       return;
     }
 
@@ -62,9 +98,9 @@ function Form() {
           <div className="form-group">
             <input
               type="tel"
-              placeholder="Ваш номер телефона"
+              placeholder="+7 (7__) ___-__-__"
               value={phone}
-              onChange={(e) => setPhone(e.target.value)}
+              onChange={handlePhoneChange}
               disabled={status === 'submitting'}
               required
             />
