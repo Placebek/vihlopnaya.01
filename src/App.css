@@ -387,6 +387,7 @@ button:disabled {
 .footer-col h3 {
   color: var(--color-red);
   font-size: 1.2rem;
+
 }
 
 .footer-col p, .footer-col a {
@@ -395,8 +396,9 @@ button:disabled {
   text-decoration: none; /* Убираем подчеркивание */
 }
 
-.footer-col a:hover {
+.footer-col a {
   color: var(--color-white);
+  margin-right: 10px;
 }
 
 .footer-bottom {

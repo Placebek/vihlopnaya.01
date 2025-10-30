@@ -5,6 +5,7 @@ import Services from './components/Services';
 import Form from './components/Form';
 import Footer from './components/Footer';
 import './App.css'; // Подключаем стили компонентов
+// import MapSection from './components/MapSection';
 
 function App() {
   return (

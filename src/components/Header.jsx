@@ -84,8 +84,8 @@ function Header() {
                         <a href="#contacts" onClick={handleLinkClick}>
                             Контакты
                         </a>
-                        <a href="tel:+77788963877" className="header-phone">
-                            +7 (778) 896-38-77
+                        <a href="tel:+77066447444" className="header-phone">
+                            +7 (706) 644-74-44
                         </a>
                     </nav>
                 </div>
